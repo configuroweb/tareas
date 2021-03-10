@@ -6,7 +6,7 @@ Todos los detalles de la apliclación los tengo colgados en la siguiente URL
 
 https://www.configuroweb.com/sistema-de-gestion-de-tareas-de-empleados-en-php-y-mysql/
 
-#Importante
+# Importante
 
 La aplicación tiene un coste de 15 USD, mi cuenta de PayPal es msevillab@gmail.com y si tienes cualquier duda me puedes contactar a mi Whatsapp en el siguiente enlace:
 
