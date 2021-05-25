@@ -71,10 +71,10 @@
 		                      Acción
 		                    </button>
 			                    <div class="dropdown-menu" style="">
-		                    	<a class="dropdown-item view_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Ver Tarea</a>
+		                    	<a class="dropdown-item view_task"  name="<?php echo $row['id'] ?>" onClick="view_task(this)" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Ver Tarea</a>
 		                    	 <div class="dropdown-divider"></div>
 			                    <?php if($_SESSION['login_type'] == 2): ?>
-		                    	<a class="dropdown-item manage_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Editar</a>
+		                    	<a class="dropdown-item" onClick="manage_task(this)" name="<?php echo $row['id'] ?>" href="javascript:void(0)" dataid="<?php echo $row['id'] ?>">Editar</a>
 		                    	 <div class="dropdown-divider"></div>
 		                    	<?php endif; ?>
 			                    <?php if($_SESSION['login_type'] == 0): ?>
@@ -83,7 +83,8 @@
 		                    	 <div class="dropdown-divider"></div>
 		                    	<?php endif; ?>
 		                    	<?php endif; ?>
-			                    <a class="dropdown-item view_progress" data-pid = '<?php echo $row['pid'] ?>' data-tid = '<?php echo $row['id'] ?>'  data-task = '<?php echo ucwords($row['task']) ?>'  href="javascript:void(0)">Ver Progreso</a>
+			                    <a class="dropdown-item view_progress" onClick="view_progress(this)" name="<?php echo ucwords($row['task']) ?>" id="<?php echo $row['id'] ?>"
+								 data-pid = '<?php echo $row['pid'] ?>' data-tid = '<?php echo $row['id'] ?>'  data-task = '<?php echo ucwords($row['task']) ?>'  href="javascript:void(0)">Ver Progreso</a>
 								</div>
 						</td>
 					</tr>	
@@ -103,22 +104,23 @@
 </style>
 <script>
 	$(document).ready(function(){
-		$('#list').dataTable()
+	$('#list').dataTable();
 	$('#new_task').click(function(){
 		uni_modal("<i class='fa fa-plus'></i> Nueva Tarea","manage_task.php",'mid-large')
 	})
-	$('.view_task').click(function(){
-		uni_modal("Ver Tarea","view_task.php?id="+$(this).attr('data-id'),'mid-large')
-	})
+	// $('.view_task').click(function(){
+	// 	uni_modal("Ver Tarea","view_task.php?id="+$(this).attr('data-id'),'mid-large')
+	// })
 	$('.manage_task').click(function(){
+		console.log("mauro");
 		uni_modal("<i class='fa fa-edit'></i> Editar Tarea","manage_task.php?id="+$(this).attr('data-id'),'mid-large')
 	})
 	$('.new_progress').click(function(){
 		uni_modal("<i class='fa fa-plus'></i> Nuevo progreso de: "+$(this).attr('data-task'),"manage_progress.php?tid="+$(this).attr('data-tid'),'mid-large')
 	})
-	$('.view_progress').click(function(){
-		uni_modal("Progeso de: "+$(this).attr('data-task'),"view_progress.php?id="+$(this).attr('data-tid'),'mid-large')
-	})
+	// $('.view_progress').click(function(){
+	// 	uni_modal("Progeso de: "+$(this).attr('data-task'),"view_progress.php?id="+$(this).attr('data-tid'),'mid-large')
+	// })
 	$('.delete_task').click(function(){
 	_conf("¿Estás seguro de eliminar esta tarea?","delete_employee",[$(this).attr('data-id')])
 	})
@@ -135,9 +137,18 @@
 					setTimeout(function(){
 						location.reload()
 					},1500)
-
 				}
 			}
 		})
 	}
+	function manage_task(obj){
+		uni_modal("<i class='fa fa-edit'></i> Editar Tarea","manage_task.php?id="+obj.name,'mid-large');
+	}
+	function view_task(obj){
+		uni_modal("Ver Tarea","view_task.php?id="+obj.name,'mid-large')
+	}
+	function view_progress(obj){
+		uni_modal("Progeso de: "+obj.name,"view_progress.php?id="+obj.id,'mid-large')
+	}
+	
 </script>
